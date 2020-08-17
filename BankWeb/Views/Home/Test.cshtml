@@ -1,0 +1,27 @@
+﻿@model IEnumerable<WeatherForecast>
+@{
+    ViewData["Title"] = "Test Page";
+}
+<h1>@ViewData["Title"]</h1>
+
+<h2>Weather forecasts</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Temperature</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var v in Model)
+        {
+            <tr>
+                <td>@v.Date.ToString()</td>
+                <td>@v.TemperatureC.ToString()</td>
+            </tr>
+        }
+    </tbody>
+
+</table>
