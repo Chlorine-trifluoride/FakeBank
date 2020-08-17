@@ -50,5 +50,18 @@ namespace BankClientApp
         {
             accountsDataGrid.ItemsSource = await AccountManager.Instance.LoadAllAccountsAsync();
         }
+
+        private async void RegisterUserButtonClick(object sender, RoutedEventArgs e)
+        {
+            string result = await CustomerManager.Instance.RegisterNewUser(firstNameTextBox.Text, lastNameTextBox.Text);
+            debugTextBox.AppendText(result);
+
+            DisplayMessageBox("Customer registered");
+        }
+
+        private async void CustomersDataGridInit(object sender, EventArgs e)
+        {
+            customersDataGrid.ItemsSource = await CustomerManager.Instance.LoadAllCustomersAsync();
+        }
     }
 }

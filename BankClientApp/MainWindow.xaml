@@ -5,42 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BankClientApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="BankManager" Height="450" Width="800">
     <TabControl>
         <TabItem Header="Admin">
-            <Grid Background="#FFE5E5E5">
+            <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="149*"/>
-                    <ColumnDefinition Width="645*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Grid Margin="25,25,0,0" ShowGridLines="True" Grid.ColumnSpan="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Label Grid.Column="0" Grid.Row="0" Content="Create New Account" FontSize="18"/>
-                    <Label Grid.Column="0" Grid.Row="1" Content="AccountName" />
-                    <TextBox Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Text="AccountName" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="0,25,0,0"/>
-                    <Label Grid.Column="0" Grid.Row="2" Content="Password" />
-                    <TextBox Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" Text="Password" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="0,25,0,0"/>
-                    <Label Grid.Column="0" Grid.Row="3" Content="Balance" />
-                    <TextBox Name="newAccountBalanceTextbox" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Left" Text="Balance" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="0,25,0,0"/>
-                    <Button Content="Create Account" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Center" Click="CreateAccountButtonClick"/>
+
+                <Grid Grid.Column="0">
+                    <Label Content="Register New User" FontSize="18" Margin="10,10,90,0"/>
+                    <Label Content="First Name" Margin="10,60,0,0"/>
+                    <TextBox Name="firstNameTextBox" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="10,89,0,0"/>
+                    <Label Content="Last Name" Margin="10,107,-10,-101" />
+                    <TextBox Name="lastNameTextBox" HorizontalAlignment="Left" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="10,130,0,0"/>
+                    <Label Content="Placeholder" Margin="10,147,-10,-140" />
+                    <TextBox HorizontalAlignment="Left" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="10,170,0,0"/>
+                    <Button Content="Register User" HorizontalAlignment="Left" VerticalAlignment="Top" Click="RegisterUserButtonClick" Margin="10,195,0,0"/>
+                </Grid>
+                
+                <Grid Grid.Column="1">
+                    <Label Content="Create New Account" FontSize="18" Margin="10,10,90,0"/>
+                    <Label Content="AccountName" Margin="10,60,0,0"/>
+                    <TextBox HorizontalAlignment="Left" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="10,89,0,0"/>
+                    <Label Content="Password" Margin="10,107,-10,-101" />
+                    <TextBox HorizontalAlignment="Left" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="10,130,0,0"/>
+                    <Label Content="Balance" Margin="10,147,-10,-140" />
+                    <TextBox Name="newAccountBalanceTextbox" HorizontalAlignment="Left" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="10,170,0,0"/>
+                    <Button Content="Create Account" HorizontalAlignment="Left" VerticalAlignment="Top" Click="CreateAccountButtonClick" Margin="10,195,0,0"/>
                 </Grid>
             </Grid>
         </TabItem>
         <TabItem Header="Customers">
-            <Grid Background="#FFE5E5E5"/>
+            <DataGrid Name="customersDataGrid" Initialized="CustomersDataGridInit"/>
         </TabItem>
         <TabItem Header="Accounts">
             <Grid Background="#FFE5E5E5">
