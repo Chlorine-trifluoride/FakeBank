@@ -16,5 +16,11 @@ namespace BankModel
 
         [JsonPropertyName("lastName")]
         public string LastName { get; set; }
+
+        [JsonPropertyName("username")]
+        public string Usernname { get; set; }
+
+        [JsonPropertyName("passwordHash")]
+        public string passwordHash { get; set; }
     }
 }

@@ -9,12 +9,12 @@ namespace BankClientApp
     class AccountManager
     {
         public static AccountManager Instance = new AccountManager();
+        private static List<BankAccount> allAccounts = null;
 
         public async Task<string> CreateNewAccountAsync(int balance, uint ownerId = 0, bool isFrozen = false)
         {
             BankAccount account = new BankAccount
             {
-                ID = 0,
                 OwnerID = ownerId,
                 IsFrozen = isFrozen,
                 Balance = balance
@@ -25,7 +25,16 @@ namespace BankClientApp
 
         public async Task<List<BankAccount>> LoadAllAccountsAsync()
         {
-            return await HttpMgr.Instance.GetAllAccountsAsync();
+            allAccounts = await HttpMgr.Instance.GetAllAccountsAsync();
+            return allAccounts;
+        }
+
+        public async Task<List<BankAccount>> GetAllAccountsAsync()
+        {
+            if (allAccounts is null)
+                return await LoadAllAccountsAsync();
+
+            return allAccounts;
         }
     }
 }

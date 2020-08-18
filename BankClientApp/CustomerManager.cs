@@ -9,6 +9,7 @@ namespace BankClientApp
     class CustomerManager
     {
         public static CustomerManager Instance = new CustomerManager();
+        private static List<BankCustomer> allCustomers = null;
         private CustomerManager()
         {
         }
@@ -18,8 +19,7 @@ namespace BankClientApp
             BankCustomer customer = new BankCustomer
             {
                 FirstName = firstName,
-                LastName = lastName,
-                ID = 0
+                LastName = lastName
             };
 
             return await HttpMgr.Instance.PostCustomerAsync(customer);
@@ -27,7 +27,16 @@ namespace BankClientApp
 
         public async Task<List<BankCustomer>> LoadAllCustomersAsync()
         {
-            return await HttpMgr.Instance.GetAllCustomersAsync();
+            allCustomers = await HttpMgr.Instance.GetAllCustomersAsync();
+            return allCustomers;
+        }
+
+        public async Task<List<BankCustomer>> GetAllAccountsAsync()
+        {
+            if (allCustomers is null)
+                return await LoadAllCustomersAsync();
+
+            return allCustomers;
         }
     }
 }
