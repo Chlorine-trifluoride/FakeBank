@@ -14,6 +14,19 @@ namespace BankClientApp
         {
         }
 
+        public async Task<string> RegisterNewUser(string firstName, string lastName, string username, string password)
+        {
+            BankCustomer customer = new BankCustomer
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                Usernname = username,
+                passwordHash = CryptoService.ComputeHash(password)
+            };
+
+            return await HttpMgr.Instance.PostCustomerAsync(customer);
+        }
+
         public async Task<string> RegisterNewUser(string firstName, string lastName)
         {
             BankCustomer customer = new BankCustomer
