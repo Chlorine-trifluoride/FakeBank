@@ -62,6 +62,22 @@ namespace BankClientApp
             return bankAccounts;
         }
 
+        public async Task<List<BankAccount>> GetAccountsForUserAsync(uint userId, string passwordHash)
+        {
+            List<BankAccount> bankAccounts;
+
+            using (HttpClient httpClient = new HttpClient(GetNewHandler()))
+            {
+                using (var response = await httpClient.GetAsync("https://localhost:5001/api/BankAccounts/"))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    bankAccounts = JsonSerializer.Deserialize<List<BankAccount>>(apiResponse);
+                }
+            }
+
+            return bankAccounts;
+        }
+
         public async Task<string> PostCustomerAsync(BankCustomer customer)
         {
             string apiResponse = "";

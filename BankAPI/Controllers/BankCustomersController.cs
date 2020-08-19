@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BankAPI;
 using BankAPI.Models;
 using BankModel;
+using SQLitePCL;
 
 namespace BankAPI.Controllers
 {
@@ -41,6 +42,30 @@ namespace BankAPI.Controllers
             }
 
             return bankCustomer;
+        }
+
+        // GET: api/BankCustomers/5/password
+        [HttpGet("{id}/{passwordHash}")]
+        public async Task<ActionResult<IEnumerable<BankAccount>>> GetBankCustomer(uint id, string passwordHash)
+        {
+            var bankCustomer = await _context.BankCustomer.FindAsync(id);
+
+            if (bankCustomer == null)
+            {
+                return NotFound();
+            }
+
+            if (bankCustomer.passwordHash != passwordHash)
+            {
+                // TODO: Raise the alarms
+                return NotFound();
+            }
+
+            var bankAccounts = from bankAccount in _context.BankAccounts
+                               where bankAccount.OwnerID == id
+                               select bankAccount;
+
+            return await bankAccounts.ToListAsync();
         }
 
         // PUT: api/BankCustomers/5

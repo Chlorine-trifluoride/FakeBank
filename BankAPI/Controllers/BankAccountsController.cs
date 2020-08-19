@@ -29,9 +29,9 @@ namespace BankAPI.Controllers
             return await _context.BankAccounts.ToListAsync();
         }
 
-        // GET: api/BankAccounts/5
+        // GET: api/BankAccounts/5/
         [HttpGet("{id}")]
-        public async Task<ActionResult<BankAccount>> GetBankAccount(uint id)
+        public async Task<ActionResult<BankAccount>> GetBankAccount(uint id, string passwordHash)
         {
             var bankAccount = await _context.BankAccounts.FindAsync(id);
 

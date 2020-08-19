@@ -36,5 +36,10 @@ namespace BankClientApp
 
             return allAccounts;
         }
+
+        public async Task<List<BankAccount>> LoadAccountsForUserAsync(BankCustomer customer)
+        {
+            return await HttpMgr.Instance.GetAccountsForUserAsync(customer.ID, customer.passwordHash);
+        }
     }
 }
