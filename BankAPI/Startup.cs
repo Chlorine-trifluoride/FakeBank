@@ -27,7 +27,8 @@ namespace BankAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<BankContext>(opt => opt.UseInMemoryDatabase("BankDB"));
+            //services.AddEntityFrameworkSqlite().AddDbContext<BankContext>();
+            services.AddDbContext<BankContext>(opt => opt.UseSqlite("Filename = Bank.db"));
             services.AddControllers();
         }
 

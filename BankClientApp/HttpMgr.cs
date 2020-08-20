@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace BankClientApp
     class HttpMgr
     {
         public static HttpMgr Instance = new HttpMgr();
+        private const int PORT = 44314;
 
         private HttpMgr()
         {
@@ -37,7 +39,7 @@ namespace BankClientApp
             {
                 string data = JsonSerializer.Serialize<BankAccount>(account);
                 var content = new StringContent(data, Encoding.UTF8, "application/json");
-                using (var response = await httpClient.PostAsync("https://localhost:5001/api/BankAccounts", content))
+                using (var response = await httpClient.PostAsync($"https://localhost:{PORT}/api/BankAccounts", content))
                 {
                     apiResponse = await response.Content.ReadAsStringAsync();
                 }
@@ -52,7 +54,7 @@ namespace BankClientApp
 
             using (HttpClient httpClient = new HttpClient(GetNewHandler()))
             {
-                using (var response = await httpClient.GetAsync("https://localhost:5001/api/BankAccounts"))
+                using (var response = await httpClient.GetAsync($"https://localhost:{PORT}/api/BankAccounts"))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     bankAccounts = JsonSerializer.Deserialize<List<BankAccount>>(apiResponse);
@@ -62,13 +64,29 @@ namespace BankClientApp
             return bankAccounts;
         }
 
+        public async Task<BankAccount> GetAccountDataAsync(uint id)
+        {
+            BankAccount bankAccount;
+
+            using (HttpClient httpClient = new HttpClient(GetNewHandler()))
+            {
+                using (var response = await httpClient.GetAsync($"https://localhost:{PORT}/api/BankAccounts/{id}"))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    bankAccount = JsonSerializer.Deserialize<BankAccount>(apiResponse);
+                }
+            }
+
+            return bankAccount;
+        }
+
         public async Task<List<BankAccount>> GetAccountsForUserAsync(uint userId, string passwordHash)
         {
             List<BankAccount> bankAccounts;
 
             using (HttpClient httpClient = new HttpClient(GetNewHandler()))
             {
-                using (var response = await httpClient.GetAsync("https://localhost:5001/api/BankAccounts/"))
+                using (var response = await httpClient.GetAsync($"https://localhost:{PORT}/api/BankAccounts/"))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     bankAccounts = JsonSerializer.Deserialize<List<BankAccount>>(apiResponse);
@@ -86,7 +104,7 @@ namespace BankClientApp
             {
                 string data = JsonSerializer.Serialize<BankCustomer>(customer);
                 var content = new StringContent(data, Encoding.UTF8, "application/json");
-                using (var response = await httpClient.PostAsync("https://localhost:5001/api/BankCustomers", content))
+                using (var response = await httpClient.PostAsync($"https://localhost:{PORT}/api/BankCustomers", content))
                 {
                     apiResponse = await response.Content.ReadAsStringAsync();
                 }
@@ -101,7 +119,7 @@ namespace BankClientApp
 
             using (HttpClient httpClient = new HttpClient(GetNewHandler()))
             {
-                using (var response = await httpClient.GetAsync("https://localhost:5001/api/BankCustomers"))
+                using (var response = await httpClient.GetAsync($"https://localhost:{PORT}/api/BankCustomers"))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     bankCustomers = JsonSerializer.Deserialize<List<BankCustomer>>(apiResponse);

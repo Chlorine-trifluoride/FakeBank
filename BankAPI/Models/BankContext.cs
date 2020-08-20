@@ -12,8 +12,13 @@ namespace BankAPI.Models
     {
         public BankContext(DbContextOptions<BankContext> options) : base(options)
         {
-
+            Database.EnsureCreated();
         }
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlite("Filename=Bank.db");
+        //}
 
         public DbSet<BankAccount> BankAccounts { get; set; }
         public DbSet<BankCustomer> BankCustomer { get; set; }
