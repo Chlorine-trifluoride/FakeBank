@@ -106,11 +106,17 @@ namespace BankClientApp
         private async void CreateNewAccountButtonClick(object sender, RoutedEventArgs e)
         {
             if (Utils.IsAnyEmptyOrNull(createNewAccountBalanceTextBox.Text))
+            {
                 Common.DisplayErrorBox("Balance field is empty");
+                return;
+            }
 
             int balance = 0;
             if (!int.TryParse(createNewAccountBalanceTextBox.Text, out balance))
+            {
                 Common.DisplayErrorBox("Invalid balance entered");
+                return;
+            }
 
             await AccountManager.Instance.CreateNewAccountAsync(balance, CustomerManager.Instance.LoggedInCustomer.ID);
             Common.DisplaySuccessBox("New Bank Account Created");
