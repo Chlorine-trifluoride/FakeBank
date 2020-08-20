@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BankClientApp"
         mc:Ignorable="d"
-        Title="UserWindow" Height="450" Width="800">
+        Title="UserWindow" Height="450" Width="930">
     <Grid>
         <Label Name="welcomeLabel" Content="Welcome User" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="22" Initialized="WelcomeLabelCreated"/>
         <ComboBox Name="userAccountsComboBox" HorizontalAlignment="Left" Margin="10,104,0,0" VerticalAlignment="Top" Width="259" Initialized="AccountsDropdownInit" SelectionChanged="userAccountsComboBox_SelectionChanged"/>
@@ -92,7 +92,7 @@
                         <TextBox Name="sendMessage" Grid.Row="3" Grid.Column="1" Text="" Width="250" FontSize="13" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
 
                         <Button Content="Send Money" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="95" Grid.Row="4" Background="#FFD0E4D1" Click="SendMoneyButtonClick"/>
-                        <ProgressBar Name="sendProgressBar" Grid.Column="1" HorizontalAlignment="Stretch" Height="20" Margin="5,5,5,5" Grid.Row="4" VerticalAlignment="Center" Width="350"/>
+                        <ProgressBar Name="sendProgressBar" Grid.Column="1" HorizontalAlignment="Left" Height="20" Margin="5,5,5,5" Grid.Row="4" VerticalAlignment="Center" Width="350"/>
 
                     </Grid>
                 </TabItem>
