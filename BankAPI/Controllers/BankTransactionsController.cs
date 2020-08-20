@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BankAPI.Models;
 using BankModel;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BankAPI.Controllers
 {
@@ -80,6 +82,26 @@ namespace BankAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<BankTransaction>> PostBankTransaction(BankTransaction bankTransaction)
         {
+            BankAccount sender = (from acc in _context.BankAccounts
+                                 where acc.IBAN == bankTransaction.SenderIBAN
+                                 select acc).First();
+
+            BankAccount reciever = (from acc in _context.BankAccounts
+                                  where acc.IBAN == bankTransaction.RecieverIBAN
+                                  select acc).First();
+
+            // Validate the transaction request
+            if (sender.IsFrozen || sender.Balance < bankTransaction.Amount)
+            {
+                return Conflict();
+            }
+
+            // Move the currency
+            sender.Balance -= (int)bankTransaction.Amount;
+            // This is where we would deduct all the fees to fund our space program
+            reciever.Balance += (int)bankTransaction.Amount;
+
+            // Log the transaction
             _context.BankTransaction.Add(bankTransaction);
             await _context.SaveChangesAsync();
 

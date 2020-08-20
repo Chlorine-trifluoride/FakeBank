@@ -38,11 +38,11 @@ namespace BankClientApp
             if (accounts is null || accounts.Count == 0)
                 return;
 
-
             userAccountsComboBox.ItemsSource = from account in accounts
-                                               select account.CombineIBAN ?? account.ID.ToString();
+                                               select $"{account.IBAN}\t{account.BalanceEur}";
 
-            userAccountsComboBox.SelectedIndex = 0;
+            // Keep the same selection, otherwise set to 0
+            userAccountsComboBox.SelectedIndex = (userAccountsComboBox.SelectedIndex == -1) ? 0 : userAccountsComboBox.SelectedIndex;
         }
 
         private async void AccountsDropdownInit(object sender, EventArgs e)
@@ -52,7 +52,21 @@ namespace BankClientApp
 
         private async void userAccountsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            await ReloadSelectedAccount();
+        }
+
+        private async Task ReloadSelectedAccount()
+        {
             int comboIndex = userAccountsComboBox.SelectedIndex;
+
+            // What is calling this with -1? Is that automatic when ItemsSource is changed
+            if (comboIndex < 0 || comboIndex > AccountManager.Instance.allUserAccounts.Count)
+            {
+                //Common.DisplayErrorBox("Account Selection is less than 1\n" +
+                //    "Canceling reload");
+                return;
+            }
+
             uint accountIndex = AccountManager.Instance.allUserAccounts[comboIndex].ID;
 
             AccountManager.Instance.SelectedAccount = await AccountManager.Instance.LoadAccountDataAsync(accountIndex);
@@ -128,6 +142,11 @@ namespace BankClientApp
             string apiResponse = await TransactionManager.SendTransactionAsync(AccountManager.Instance.SelectedAccount,
                                                                                rIBAN, rName, amount, message);
 
+            // Reload our accounts
+            //await ReloadSelectedAccount();
+            await ReloadUserAccounts();
+
+            // TODO: Display more userfriendly information
             Common.DisplaySuccessBox(apiResponse);
         }
 
