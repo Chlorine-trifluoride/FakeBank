@@ -4,6 +4,8 @@ using System.Text;
 
 namespace BankModel
 {
+    // Used for displaying transactions in the UI
+    // Do not use for actual transactions
     public class BATransaction
     {
         public bool Sending { get; set; }
