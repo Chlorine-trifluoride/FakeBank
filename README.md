@@ -1,4 +1,4 @@
-# FakeBank <img src="https://github.com/Chlorine-trifluoride/FakeBank/raw/readme/Media/icon.png" width=64/>
+# FakeBank <img src="https://github.com/Chlorine-trifluoride/FakeBank/raw/master/Media/icon.png" width=64/>
 
 <img src="https://github.com/Chlorine-trifluoride/FakeBank/workflows/.NET%20Core/badge.svg"/>
 
@@ -25,19 +25,19 @@ The API url:port is hard coded in **<a href=https://github.com/Chlorine-trifluor
 
 ## Account Info Page
 
-<img src="https://github.com/Chlorine-trifluoride/FakeBank/raw/readme/Media/testman_infopage.png"/>
+<img src="https://github.com/Chlorine-trifluoride/FakeBank/raw/master/Media/testman_infopage.png"/>
 
 
 ## Transfering Funds
 
-<img src="https://github.com/Chlorine-trifluoride/FakeBank/raw/readme/Media/bill_transfer.gif"/>
+<img src="https://github.com/Chlorine-trifluoride/FakeBank/raw/master/Media/bill_transfer.gif"/>
 
 
 ## Transaction History
 
-<img src="https://github.com/Chlorine-trifluoride/FakeBank/raw/readme/Media/transaction_history.png"/>
+<img src="https://github.com/Chlorine-trifluoride/FakeBank/raw/master/Media/transaction_history.png"/>
 
 
 ## Basic Login / Register
 
-<img src="https://github.com/Chlorine-trifluoride/FakeBank/raw/readme/Media/login_register.png"/>
+<img src="https://github.com/Chlorine-trifluoride/FakeBank/raw/master/Media/login_register.png"/>
