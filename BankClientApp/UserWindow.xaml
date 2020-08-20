@@ -30,12 +30,66 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="Account Info">
-                    <Grid Background="#FFE5E5E5">
-                        
+                    <Grid Background="#FFE5E5E5" ShowGridLines="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="115"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Account ID" FontSize="13" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Is Active" FontSize="13" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Balance" FontSize="13" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="BIC4" FontSize="13" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Account Number" FontSize="13" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="5" Grid.Column="0" Text="Full IBAN" FontSize="13" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center"/>
+
+                        <TextBlock Name="infoAccountID" Grid.Row="0" Grid.Column="1" Text="not loaded" FontSize="13" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        <TextBlock Name="infoIsActive" Grid.Row="1" Grid.Column="1" Text="not loaded" FontSize="13" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        <TextBlock Name="infoBalance" Grid.Row="2" Grid.Column="1" Text="not loaded" FontSize="13" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        <TextBlock Name="infoBic4" Grid.Row="3" Grid.Column="1" Text="not loaded" FontSize="13" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        <TextBlock Name="infoAccountNumber" Grid.Row="4" Grid.Column="1" Text="not loaded" FontSize="13" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        <TextBlock Name="infoIBAN" Grid.Row="5" Grid.Column="1" Text="not loaded" FontSize="13" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+
                     </Grid>
                 </TabItem>
                 <TabItem Header="Send Money">
-                    <Grid Background="#FFE5E5E5"/>
+                    <Grid Background="#FFE5E5E5" ShowGridLines="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="115"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Recipient IBAN" FontSize="13" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Recipient Name" FontSize="13" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Amount" FontSize="13" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Message" FontSize="13" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center"/>
+
+                        <TextBox Name="sendRecipientIBAN" Grid.Row="0" Grid.Column="1" Text="not loaded" Width="250" FontSize="13" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        <TextBox Name="sendRecipientName" Grid.Row="1" Grid.Column="1" Text="not loaded" Width="250" FontSize="13" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        <TextBox Name="sendAmount" Grid.Row="2" Grid.Column="1" Text="not loaded" FontSize="13" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        <TextBox Name="sendMessage" Grid.Row="3" Grid.Column="1" Text="not loaded" Width="250" FontSize="13" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+
+                        <Button Content="Send Money" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="95" Grid.Row="4" Background="#FFD0E4D1"/>
+
+                    </Grid>
                 </TabItem>
                 <TabItem Header="Request Money">
                     <Grid Background="#FFE5E5E5"/>
@@ -46,13 +100,15 @@
             </TabControl>
 
         </Grid>
-        
-        <Rectangle HorizontalAlignment="Left" Height="63" Margin="8,254,0,0" Stroke="Black" VerticalAlignment="Top" Width="261"/>
-        <Label Content="Create new Account" HorizontalAlignment="Left" Margin="9,220,0,0" VerticalAlignment="Top" FontSize="14"/>
-        <Label Content="Balance" HorizontalAlignment="Left" Margin="14,254,0,0" VerticalAlignment="Top"/>
-        <TextBox Name="createNewAccountBalanceTextBox" HorizontalAlignment="Left" Text="" Margin="14,285,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Create Account" HorizontalAlignment="Left" Margin="139,285,0,0" VerticalAlignment="Top" Width="116" Click="CreateNewAccountButtonClick"/>
-        <Button Content="Logout" HorizontalAlignment="Left" Margin="14,336,0,0" VerticalAlignment="Top" Height="27" Width="94" Background="#FFD68C8C" Click="LogoutButtonClick"/>
+
+        <Label Name="balanceLabel" Content="Balance: 150€" HorizontalAlignment="Left" Margin="10,140,0,0" VerticalAlignment="Top" FontSize="16"/>
+
+        <Rectangle HorizontalAlignment="Left" Height="63" Margin="12,306,0,0" Stroke="Black" VerticalAlignment="Top" Width="261"/>
+        <Label Content="Create new Account" HorizontalAlignment="Left" Margin="13,272,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <Label Content="Balance" HorizontalAlignment="Left" Margin="18,306,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="createNewAccountBalanceTextBox" HorizontalAlignment="Left" Text="" Margin="18,337,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Create Account" HorizontalAlignment="Left" Margin="143,337,0,0" VerticalAlignment="Top" Width="116" Click="CreateNewAccountButtonClick"/>
+        <Button Content="Logout" HorizontalAlignment="Left" Margin="18,374,0,0" VerticalAlignment="Top" Height="27" Width="94" Background="#FFD68C8C" Click="LogoutButtonClick"/>
 
     </Grid>
 </Window>

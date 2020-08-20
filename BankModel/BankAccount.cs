@@ -29,5 +29,7 @@ namespace BankModel
         public string AccountNumber { get; set; }
 
         public string IBAN => BIC + AccountNumber;
+
+        public string BalanceEur => $"{Balance}€";
     }
 }

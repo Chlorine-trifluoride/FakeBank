@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace BankClientApp
 {
-    /// <summary>
-    /// Interaction logic for UserWindow.xaml
-    /// </summary>
     public partial class UserWindow : Window
     {
         private BankCustomer loggedCustomer = null;
@@ -58,9 +55,22 @@ namespace BankClientApp
             int comboIndex = userAccountsComboBox.SelectedIndex;
             uint accountIndex = AccountManager.Instance.allUserAccounts[comboIndex].ID;
 
-            List<BankAccount> bankAccounts = new List<BankAccount>();
-            bankAccounts.Add(await AccountManager.Instance.LoadAccountDataAsync(accountIndex));
-            //accountDataGrid.ItemsSource = bankAccounts;
+            BankAccount selectedAccount = await AccountManager.Instance.LoadAccountDataAsync(accountIndex);
+            UpdateUIAccountSelectionChanged(selectedAccount);
+        }
+
+        private void UpdateUIAccountSelectionChanged(BankAccount account)
+        {
+            // Main window
+            balanceLabel.Content = account.BalanceEur;
+
+            // Info Tab
+            infoAccountID.Text = account.ID.ToString();
+            infoIsActive.Text = (!account.IsFrozen).ToString();
+            infoBalance.Text = account.Balance.ToString();
+            infoBic4.Text = account.BIC;
+            infoAccountNumber.Text = account.AccountNumber;
+            infoIBAN.Text = account.IBAN;
         }
 
         private void WelcomeLabelCreated(object sender, EventArgs e)

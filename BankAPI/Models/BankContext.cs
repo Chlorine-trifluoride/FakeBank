@@ -25,5 +25,6 @@ namespace BankAPI.Models
 
         public DbSet<BankAccount> BankAccounts { get; set; }
         public DbSet<BankCustomer> BankCustomer { get; set; }
+        public DbSet<BankModel.BankTransaction> BankTransaction { get; set; }
     }
 }
