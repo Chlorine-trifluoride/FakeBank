@@ -12,18 +12,18 @@
         <Label Content="Select your account to manage" HorizontalAlignment="Left" Margin="10,63,0,0" VerticalAlignment="Top"/>
         <!--<DataGrid Name="accountDataGrid" Width="500" HorizontalAlignment="Right"/>-->
 
-        <Grid Width="500" HorizontalAlignment="Right">
+        <Grid Margin="300,0,0,0" HorizontalAlignment="Stretch">
             <TabControl>
                 <TabItem Header="Transaction History">
                     <Grid Background="#FFE5E5E5">
-                        <ListView>
+                        <ListView Name="transactionHistoryListView">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Header="Amount" Width="120"/>
-                                    <GridViewColumn Header="Other Party" Width="120"/>
-                                    <GridViewColumn Header="IBAN" Width="120"/>
-                                    <GridViewColumn Header="Message" Width="120"/>
-                                    <GridViewColumn Header="Date" Width="120"/>
+                                    <GridViewColumn Header="Amount" Width="60" DisplayMemberBinding="{Binding AmountEur}"/>
+                                    <GridViewColumn Header="Other Name" Width="120" DisplayMemberBinding="{Binding OtherName}"/>
+                                    <GridViewColumn Header="Other IBAN" Width="140" DisplayMemberBinding="{Binding OtherIBAN}"/>
+                                    <GridViewColumn Header="Message" Width="120" DisplayMemberBinding="{Binding Message}"/>
+                                    <GridViewColumn Header="Date" Width="140" DisplayMemberBinding="{Binding Date}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
@@ -92,6 +92,7 @@
                         <TextBox Name="sendMessage" Grid.Row="3" Grid.Column="1" Text="" Width="250" FontSize="13" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
 
                         <Button Content="Send Money" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="95" Grid.Row="4" Background="#FFD0E4D1" Click="SendMoneyButtonClick"/>
+                        <ProgressBar Name="sendProgressBar" Grid.Column="1" HorizontalAlignment="Stretch" Height="20" Margin="5,5,5,5" Grid.Row="4" VerticalAlignment="Center" Width="350"/>
 
                     </Grid>
                 </TabItem>

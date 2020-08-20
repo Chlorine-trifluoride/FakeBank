@@ -71,6 +71,8 @@ namespace BankClientApp
 
             AccountManager.Instance.SelectedAccount = await AccountManager.Instance.LoadAccountDataAsync(accountIndex);
             UpdateUIAccountSelectionChanged(AccountManager.Instance.SelectedAccount);
+
+            await ReloadTransactionHistoryAsync();
         }
 
         private void UpdateUIAccountSelectionChanged(BankAccount account)
@@ -85,6 +87,15 @@ namespace BankClientApp
             infoBic4.Text = account.BIC;
             infoAccountNumber.Text = account.AccountNumber;
             infoIBAN.Text = account.CombineIBAN;
+        }
+
+        private async Task ReloadTransactionHistoryAsync()
+        {
+            List<BATransaction> transactionHistory = 
+                await TransactionManager.BuildTransactionHistoryForAccount(AccountManager.Instance.SelectedAccount);
+
+            // Update the UI
+            transactionHistoryListView.ItemsSource = transactionHistory;
         }
 
         private void WelcomeLabelCreated(object sender, EventArgs e)
@@ -102,6 +113,7 @@ namespace BankClientApp
                 Common.DisplayErrorBox("Invalid balance entered");
 
             await AccountManager.Instance.CreateNewAccountAsync(balance, CustomerManager.Instance.LoggedInCustomer.ID);
+            Common.DisplaySuccessBox("New Bank Account Created");
             await ReloadUserAccounts();
         }
 
@@ -142,12 +154,25 @@ namespace BankClientApp
             string apiResponse = await TransactionManager.SendTransactionAsync(AccountManager.Instance.SelectedAccount,
                                                                                rIBAN, rName, amount, message);
 
-            // Reload our accounts
+            await Task.Run(async () =>
+                { // this should take about 1 second
+                    for (int i = 1; i < 61; i++)
+                    {
+                        await Dispatcher.BeginInvoke(new Action(delegate() { sendProgressBar.Value = i / 60.0d * 100; }));
+                        await Task.Delay(16);
+                    }
+                });
+
+            // TODO: There's some weird issues here
             //await ReloadSelectedAccount();
             await ReloadUserAccounts();
 
+            // Hack: Update the comboBox item text locally
+            int localBalance = (int)(AccountManager.Instance.SelectedAccount.Balance - amount);
+            userAccountsComboBox.SelectedItem = $"{AccountManager.Instance.SelectedAccount.IBAN}\t{AccountManager.Instance.SelectedAccount.BalanceEur}"; 
+
             // TODO: Display more userfriendly information
-            Common.DisplaySuccessBox(apiResponse);
+            Common.DisplaySuccessBox("Money transfered succesfully");
         }
 
         private void InfoIBANCopyToClipButtonClick(object sender, RoutedEventArgs e)

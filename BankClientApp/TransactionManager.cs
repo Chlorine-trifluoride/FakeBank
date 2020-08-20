@@ -1,6 +1,7 @@
 ﻿using BankModel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -37,6 +38,58 @@ namespace BankClientApp
 
             // Send it to the API
             return await HttpMgr.Instance.PostTransactionAsync(transaction);
+        }
+
+        // Load the raw transaction history
+        public static async Task<List<BankTransaction>> LoadBankTransactionHistoryAsync(string IBAN)
+        {
+            return await HttpMgr.Instance.GetBankTransactionHistoryAsync(IBAN);
+        }
+
+        public static async Task<List<BATransaction>> BuildTransactionHistoryForAccount(BankAccount account)
+        {
+            List<BankTransaction> rawTransactions = await LoadBankTransactionHistoryAsync(account.IBAN);
+            
+            if (rawTransactions is null) // no transactions
+                return null;
+
+            BATransaction[] baTransactionData = new BATransaction[rawTransactions.Count];
+
+            for (int i = 0; i < rawTransactions.Count; i++)
+            {
+                BankTransaction b = rawTransactions[i];
+                BATransaction btr;
+
+                // IF we are the sender
+                if (b.SenderIBAN == account.IBAN)
+                {
+                    btr = new BATransaction
+                    {
+                        Amount = -(int)b.Amount,
+                        OtherIBAN = b.RecieverIBAN,
+                        OtherName = b.ReceiverName,
+                        Sending = true
+                    };
+                }
+
+                else // We are the reciever
+                {
+                    btr = new BATransaction
+                    {
+                        Amount = (int)b.Amount,
+                        OtherIBAN = b.SenderIBAN,
+                        OtherName = b.SenderName,
+                        Sending = false
+                    };
+                }
+
+                btr.Date = b.Date;
+                btr.Message = b.Message;
+
+                baTransactionData[i] = btr;
+            }
+
+            return baTransactionData.ToList();
         }
     }
 }

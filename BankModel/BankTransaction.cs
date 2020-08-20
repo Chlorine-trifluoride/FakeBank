@@ -32,5 +32,7 @@ namespace BankModel
 
         [JsonPropertyName("date")]
         public DateTime Date { get; set; }
+
+        public string AmountEur => $"{Amount}€";
     }
 }

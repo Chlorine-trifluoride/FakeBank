@@ -44,6 +44,24 @@ namespace BankAPI.Controllers
             return bankTransaction;
         }
 
+        // Load all transactions for specific IBAN
+        // GET: api/BankTransactions/IBAN/FA5311698894372701
+        [HttpGet("IBAN/{IBAN}")]
+        public async Task<ActionResult<IEnumerable<BankTransaction>>> GetBankTransaction(string IBAN)
+        {
+            var bankTransactions = from transact in _context.BankTransaction
+                                   where transact.RecieverIBAN == IBAN || transact.SenderIBAN == IBAN
+                                   orderby transact.Date descending
+                                   select transact;
+
+            if (bankTransactions is null || bankTransactions.Count() < 1)
+            {
+                return NotFound();
+            }
+
+            return await bankTransactions.ToListAsync();
+        }
+
         // PUT: api/BankTransactions/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.

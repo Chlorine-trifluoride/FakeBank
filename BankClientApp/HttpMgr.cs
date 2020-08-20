@@ -194,5 +194,24 @@ namespace BankClientApp
 
             return accountExists;
         }
+
+        public async Task<List<BankTransaction>> GetBankTransactionHistoryAsync(string IBAN)
+        {
+            List<BankTransaction> bankTransactions;
+
+            using (HttpClient httpClient = new HttpClient(GetNewHandler()))
+            {
+                using (var response = await httpClient.GetAsync($"{SERVER}:{PORT}/api/BankTransactions/IBAN/{IBAN}"))
+                {
+                    if (!response.IsSuccessStatusCode)
+                        return null;
+
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    bankTransactions = JsonSerializer.Deserialize<List<BankTransaction>>(apiResponse);
+                }
+            }
+
+            return bankTransactions;
+        }
     }
 }
