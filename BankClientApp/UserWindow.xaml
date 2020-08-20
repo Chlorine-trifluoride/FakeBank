@@ -92,8 +92,10 @@
                         <TextBox Name="sendMessage" Grid.Row="3" Grid.Column="1" Text="" Width="250" FontSize="13" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
 
                         <Button Content="Send Money" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="95" Grid.Row="4" Background="#FFD0E4D1" Click="SendMoneyButtonClick"/>
-                        <ProgressBar Name="sendProgressBar" Grid.Column="1" HorizontalAlignment="Left" Height="20" Margin="5,5,5,5" Grid.Row="4" VerticalAlignment="Center" Width="350"/>
-
+                        <Grid Margin="5" Grid.Column="1" Grid.Row="4">
+                            <ProgressBar Name="sendProgressBar" HorizontalAlignment="Stretch" Height="20" VerticalAlignment="Center" Value="0"/>
+                            <TextBlock Name="sendProgressText" Text="" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="18" FontWeight="Normal" FontStyle="Normal"/>
+                        </Grid>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Request Money">

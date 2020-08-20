@@ -25,9 +25,7 @@ namespace BankClientApp
 
         private async void DataGrid_Initialized(object sender, EventArgs e)
         {
-            WeatherLoader weatherLoader = new WeatherLoader();
-            List<WeatherForecast> weatherForecasts = await weatherLoader.LoadWeatherForecasts();
-            weatherGrid.ItemsSource = weatherForecasts;
+            // No more weather
         }
 
         private async void CreateAccountButtonClick(object sender, RoutedEventArgs e)

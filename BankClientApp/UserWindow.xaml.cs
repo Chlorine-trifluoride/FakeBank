@@ -164,7 +164,10 @@ namespace BankClientApp
                 { // this should take about 1 second
                     for (int i = 1; i < 61; i++)
                     {
-                        await Dispatcher.BeginInvoke(new Action(delegate() { sendProgressBar.Value = i / 60.0d * 100; }));
+                        double percent = i / 60.0d;
+                        string text = $"{(int)(percent * amount)}€";
+
+                        await Dispatcher.BeginInvoke(new Action(delegate() { UpdateProgressBarUI(percent * 100.0d, text); }));
                         await Task.Delay(16);
                     }
                 });
@@ -179,6 +182,12 @@ namespace BankClientApp
 
             // TODO: Display more userfriendly information
             Common.DisplaySuccessBox("Money transfered succesfully");
+        }
+
+        private void UpdateProgressBarUI(double value, string text)
+        {
+            sendProgressBar.Value = value;
+            sendProgressText.Text = text;
         }
 
         private void InfoIBANCopyToClipButtonClick(object sender, RoutedEventArgs e)
