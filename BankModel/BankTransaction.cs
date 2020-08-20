@@ -13,7 +13,7 @@ namespace BankModel
         public uint ID { get; set; }
 
         [JsonPropertyName("amount")]
-        public string Amount { get; set; }
+        public uint Amount { get; set; }
 
         [JsonPropertyName("senderIBAN")]
         public string SenderIBAN { get; set; }

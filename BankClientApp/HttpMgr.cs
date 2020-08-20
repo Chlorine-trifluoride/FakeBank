@@ -168,7 +168,7 @@ namespace BankClientApp
             {
                 string data = JsonSerializer.Serialize<BankTransaction>(transaction);
                 var content = new StringContent(data, Encoding.UTF8, "application/json");
-                using (var response = await httpClient.PostAsync($"{SERVER}:{PORT}/api/BankCustomers", content))
+                using (var response = await httpClient.PostAsync($"{SERVER}:{PORT}/api/BankTransactions", content))
                 {
                     apiResponse = await response.Content.ReadAsStringAsync();
                 }

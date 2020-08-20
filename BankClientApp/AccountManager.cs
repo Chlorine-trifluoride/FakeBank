@@ -12,6 +12,7 @@ namespace BankClientApp
         public static AccountManager Instance = new AccountManager();
         private static List<BankAccount> allAccounts = null;
         public List<BankAccount> allUserAccounts = null;
+        public BankAccount SelectedAccount { get; set; }
 
         public async Task<string> CreateNewAccountAsync(int balance, uint ownerId, bool isFrozen = false)
         {
@@ -26,6 +27,8 @@ namespace BankClientApp
                 BIC = GLOBALS.BANK_BIC,
                 AccountNumber = newAccountNumber
             };
+            // TODO: fix this maddnessss
+            account.IBAN = account.CombineIBAN;
 
             return await HttpMgr.Instance.PostAccountAsync(account);
         }

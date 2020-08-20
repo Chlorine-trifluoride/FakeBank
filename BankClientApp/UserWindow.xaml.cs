@@ -40,7 +40,7 @@ namespace BankClientApp
 
 
             userAccountsComboBox.ItemsSource = from account in accounts
-                                               select account.IBAN ?? account.ID.ToString();
+                                               select account.CombineIBAN ?? account.ID.ToString();
 
             userAccountsComboBox.SelectedIndex = 0;
         }
@@ -55,8 +55,8 @@ namespace BankClientApp
             int comboIndex = userAccountsComboBox.SelectedIndex;
             uint accountIndex = AccountManager.Instance.allUserAccounts[comboIndex].ID;
 
-            BankAccount selectedAccount = await AccountManager.Instance.LoadAccountDataAsync(accountIndex);
-            UpdateUIAccountSelectionChanged(selectedAccount);
+            AccountManager.Instance.SelectedAccount = await AccountManager.Instance.LoadAccountDataAsync(accountIndex);
+            UpdateUIAccountSelectionChanged(AccountManager.Instance.SelectedAccount);
         }
 
         private void UpdateUIAccountSelectionChanged(BankAccount account)
@@ -70,7 +70,7 @@ namespace BankClientApp
             infoBalance.Text = account.BalanceEur;
             infoBic4.Text = account.BIC;
             infoAccountNumber.Text = account.AccountNumber;
-            infoIBAN.Text = account.IBAN;
+            infoIBAN.Text = account.CombineIBAN;
         }
 
         private void WelcomeLabelCreated(object sender, EventArgs e)
@@ -103,6 +103,38 @@ namespace BankClientApp
             LoginWindow loginWindow = new LoginWindow();
             loginWindow.Show();
             this.Close();
+        }
+
+        private async void SendMoneyButtonClick(object sender, RoutedEventArgs e)
+        {
+            string rIBAN = sendRecipientIBAN.Text;
+            string rName = sendRecipientName.Text;
+            string message = sendMessage.Text;
+
+            uint amount;
+            if (!uint.TryParse(sendAmount.Text, out amount))
+            {
+                Common.DisplayErrorBox("Invalid Syntax for Amount\n" +
+                    "Only positive integers allowed.");
+                return;
+            }
+
+            if (Utils.IsAnyEmptyOrNull<string>(rIBAN, rName))
+            {
+                Common.DisplayErrorBox("Missing required information");
+                return;
+            }
+
+            string apiResponse = await TransactionManager.SendTransactionAsync(AccountManager.Instance.SelectedAccount,
+                                                                               rIBAN, rName, amount, message);
+
+            Common.DisplaySuccessBox(apiResponse);
+        }
+
+        private void InfoIBANCopyToClipButtonClick(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(infoIBAN.Text);
+            Common.DisplaySuccessBox("Account IBAN copied to clipboard");
         }
     }
 }

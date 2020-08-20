@@ -24,5 +24,7 @@ namespace BankModel
 
         [JsonPropertyName("passwordHash")]
         public string passwordHash { get; set; }
+
+        public string FullName => $"{FirstName} {LastName}";
     }
 }

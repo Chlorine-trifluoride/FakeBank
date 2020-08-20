@@ -28,7 +28,10 @@ namespace BankModel
         [JsonPropertyName("accountNumber")]
         public string AccountNumber { get; set; }
 
-        public string IBAN => BIC + AccountNumber;
+        [JsonPropertyName("iban")]
+        public string IBAN { get; set; }
+
+        public string CombineIBAN => BIC + AccountNumber;
 
         public string BalanceEur => $"{Balance}€";
     }
