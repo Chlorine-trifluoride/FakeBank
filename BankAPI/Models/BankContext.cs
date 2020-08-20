@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using BankAPI;
 using BankModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BankAPI.Models
 {
@@ -12,6 +13,8 @@ namespace BankAPI.Models
     {
         public BankContext(DbContextOptions<BankContext> options) : base(options)
         {
+            // This is where we would use migrations if that shit wasn't so bugged
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 

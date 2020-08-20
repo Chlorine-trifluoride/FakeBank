@@ -5,12 +5,54 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BankClientApp"
         mc:Ignorable="d"
-        Title="UserWindow" Height="450" Width="600">
+        Title="UserWindow" Height="450" Width="800">
     <Grid>
-        <Label Content="Welcome User" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="22"/>
-        <ComboBox Name="userAccountsComboBox" HorizontalAlignment="Left" Margin="10,104,0,0" VerticalAlignment="Top" Width="165" Initialized="AccountsDropdownInit" SelectionChanged="userAccountsComboBox_SelectionChanged"/>
+        <Label Name="welcomeLabel" Content="Welcome User" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="22" Initialized="WelcomeLabelCreated"/>
+        <ComboBox Name="userAccountsComboBox" HorizontalAlignment="Left" Margin="10,104,0,0" VerticalAlignment="Top" Width="259" Initialized="AccountsDropdownInit" SelectionChanged="userAccountsComboBox_SelectionChanged"/>
         <Label Content="Select your account to manage" HorizontalAlignment="Left" Margin="10,63,0,0" VerticalAlignment="Top"/>
-        <DataGrid Name="accountDataGrid" Width="300" HorizontalAlignment="Right"/>
+        <!--<DataGrid Name="accountDataGrid" Width="500" HorizontalAlignment="Right"/>-->
+
+        <Grid Width="500" HorizontalAlignment="Right">
+            <TabControl>
+                <TabItem Header="Transaction History">
+                    <Grid Background="#FFE5E5E5">
+                        <ListView>
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Amount" Width="120"/>
+                                    <GridViewColumn Header="Other Party" Width="120"/>
+                                    <GridViewColumn Header="IBAN" Width="120"/>
+                                    <GridViewColumn Header="Date" Width="120"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Account Info">
+                    <Grid Background="#FFE5E5E5">
+                        
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Send Money">
+                    <Grid Background="#FFE5E5E5"/>
+                </TabItem>
+                <TabItem Header="Request Money">
+                    <Grid Background="#FFE5E5E5"/>
+                </TabItem>
+                <TabItem Header="Help Desk">
+                    <Grid Background="#FFE5E5E5"/>
+                </TabItem>
+            </TabControl>
+
+        </Grid>
+        
+        <Rectangle HorizontalAlignment="Left" Height="63" Margin="8,254,0,0" Stroke="Black" VerticalAlignment="Top" Width="261"/>
+        <Label Content="Create new Account" HorizontalAlignment="Left" Margin="9,220,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <Label Content="Balance" HorizontalAlignment="Left" Margin="14,254,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="createNewAccountBalanceTextBox" HorizontalAlignment="Left" Text="" Margin="14,285,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Create Account" HorizontalAlignment="Left" Margin="139,285,0,0" VerticalAlignment="Top" Width="116" Click="CreateNewAccountButtonClick"/>
+        <Button Content="Logout" HorizontalAlignment="Left" Margin="14,336,0,0" VerticalAlignment="Top" Height="27" Width="94" Background="#FFD68C8C" Click="LogoutButtonClick"/>
 
     </Grid>
 </Window>

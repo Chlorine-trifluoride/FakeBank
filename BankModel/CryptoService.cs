@@ -20,5 +20,18 @@ namespace BankModel
 
             return Convert.ToBase64String(hash);
         }
+
+        public static string ComputeSimpleHash(string input)
+        {
+            byte[] bytes = Encoding.ASCII.GetBytes(input);
+            byte[] hash;
+
+            using (SHA1 shaM = new SHA1Managed())
+            {
+                hash = shaM.ComputeHash(bytes);
+            }
+
+            return Convert.ToBase64String(hash);
+        }
     }
 }

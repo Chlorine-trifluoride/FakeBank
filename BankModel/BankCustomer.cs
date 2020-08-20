@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ namespace BankModel
 {
     public class BankCustomer
     {
+        [Key]
         [JsonPropertyName("iD")]
         public uint ID { get; set; }
 

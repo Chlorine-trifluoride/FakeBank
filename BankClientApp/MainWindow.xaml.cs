@@ -55,8 +55,8 @@ namespace BankClientApp
 
         private async void RegisterUserButtonClick(object sender, RoutedEventArgs e)
         {
-            string result = await CustomerManager.Instance.RegisterNewUser(firstNameTextBox.Text, lastNameTextBox.Text);
-            debugTextBox.AppendText(result);
+            await CustomerManager.Instance.RegisterNewUser(firstNameTextBox.Text, lastNameTextBox.Text);
+            debugTextBox.AppendText("Disabled for re implementation");
 
             DisplayMessageBox("Customer registered");
         }

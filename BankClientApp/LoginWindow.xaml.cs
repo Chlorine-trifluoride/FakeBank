@@ -31,16 +31,37 @@ namespace BankClientApp
             string password = registerPasswordBox.Password;
 
             if (Utils.IsAnyEmptyOrNull(firstName, lastName, username, password))
-                DisplayErrorBox("One or more fields are empty");
+                Common.DisplayErrorBox("One or more fields is empty");
 
-            string httpReply = await CustomerManager.Instance.RegisterNewUser(firstName, lastName, username, password);
+            BankCustomer createdCustomer = await CustomerManager.Instance.RegisterNewUser(firstName, lastName, username, password);
+            Common.DisplaySuccessBox("Account created succesfully");
+            Login(CustomerManager.Instance.LoggedInCustomer);
         }
 
-        private void DisplayErrorBox(string errorText)
+        private void Login(BankCustomer customer)
         {
-            MessageBoxButton button = MessageBoxButton.OK;
-            MessageBoxImage icon = MessageBoxImage.Error;
-            MessageBox.Show(errorText, "ERROR", button, icon);
+            CustomerManager.Instance.LoggedInCustomer = customer;
+
+            UserWindow userWindow = new UserWindow();
+            userWindow.Show();
+            this.Close();
+        }
+
+        private async void LoginButtonClick(object sender, RoutedEventArgs e)
+        {
+            string username = loginUsernameTextBox.Text;
+            string password = loginPasswordBox.Password;
+
+            if (Utils.IsAnyEmptyOrNull(username, password))
+                Common.DisplayErrorBox("One or more fields is empty");
+
+            BankCustomer customer = await CustomerManager.Instance.GetCustomerWithPasswordAsync(username, password);
+
+            if (customer is null)
+                Common.DisplayErrorBox("Invalid Login");
+
+            else
+                Login(customer);
         }
     }
 }

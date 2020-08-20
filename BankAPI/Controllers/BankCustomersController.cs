@@ -44,8 +44,9 @@ namespace BankAPI.Controllers
             return bankCustomer;
         }
 
-        // GET: api/BankCustomers/5/password
-        [HttpGet("{id}/{passwordHash}")]
+        // Get all user BankAccounts
+        // GET: api/BankCustomers/5/passwordHash
+        [HttpGet("{id:int}/{passwordHash}")]
         public async Task<ActionResult<IEnumerable<BankAccount>>> GetBankCustomer(uint id, string passwordHash)
         {
             var bankCustomer = await _context.BankCustomer.FindAsync(id);
@@ -66,6 +67,35 @@ namespace BankAPI.Controllers
                                select bankAccount;
 
             return await bankAccounts.ToListAsync();
+        }
+
+        // Get valid BankCustomer from login
+        // GET: api/BankCustomers/username/passwordHash
+        [HttpGet("{username}/{passwordHash}")]
+        public async Task<ActionResult<BankCustomer>> GetBankCustomer(string username, string passwordHash)
+        {
+            // fix for the base64 encoding
+            passwordHash = Uri.UnescapeDataString(passwordHash);
+
+            var bankAccount = from bankCustomer in _context.BankCustomer
+                              where bankCustomer.Usernname == username && bankCustomer.passwordHash == passwordHash
+                              select bankCustomer;
+
+            var matchedAccounts = await bankAccount.ToArrayAsync();
+
+            if (matchedAccounts == null || matchedAccounts.Length == 0)
+            {
+                return NotFound();
+            }
+
+            // do invalid passwords later
+            //if (bankCustomer.passwordHash != passwordHash)
+            //{
+            //    // TODO: Raise the alarms
+            //    return NotFound();
+            //}
+
+            return matchedAccounts[0];
         }
 
         // PUT: api/BankCustomers/5

@@ -31,7 +31,7 @@ namespace BankAPI.Controllers
 
         // GET: api/BankAccounts/5/
         [HttpGet("{id}")]
-        public async Task<ActionResult<BankAccount>> GetBankAccount(uint id, string passwordHash)
+        public async Task<ActionResult<BankAccount>> GetBankAccount(uint id)
         {
             var bankAccount = await _context.BankAccounts.FindAsync(id);
 
@@ -41,6 +41,35 @@ namespace BankAPI.Controllers
             }
 
             return bankAccount;
+        }
+
+        // Get bank accounts for specific user with password
+        // GET: api/BankAccounts/5/passwordhash
+        [HttpGet("{ownerID:int}/{passwordHash}")]
+        public async Task<ActionResult<IEnumerable<BankAccount>>> GetBankAccount(uint ownerID, string passwordHash)
+        {
+            // fix for the base64 encoding
+            passwordHash = Uri.UnescapeDataString(passwordHash);
+
+            var user = from customer in _context.BankCustomer
+                       where customer.ID == ownerID && customer.passwordHash == passwordHash
+                       select customer;
+
+            if (user.Count() < 1) // not found / wrong password
+            {
+                return Unauthorized();
+            }
+
+            var bankAccount = from account in _context.BankAccounts
+                              where account.OwnerID == ownerID
+                              select account;
+
+            if (bankAccount == null)
+            {
+                return NotFound();
+            }
+
+            return await bankAccount.ToListAsync();
         }
 
         // PUT: api/BankAccounts/5

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BankModel;
@@ -10,14 +11,20 @@ namespace BankClientApp
     {
         public static AccountManager Instance = new AccountManager();
         private static List<BankAccount> allAccounts = null;
+        public List<BankAccount> allUserAccounts = null;
 
-        public async Task<string> CreateNewAccountAsync(int balance, uint ownerId = 0, bool isFrozen = false)
+        public async Task<string> CreateNewAccountAsync(int balance, uint ownerId, bool isFrozen = false)
         {
+            uint newAccountIndex = newAccountIndex = (uint)(allUserAccounts?.Count ?? 0);
+            string newAccountNumber = Utils.CreateBankAccountNumber(CustomerManager.Instance.LoggedInCustomer, newAccountIndex);
+
             BankAccount account = new BankAccount
             {
                 OwnerID = ownerId,
                 IsFrozen = isFrozen,
-                Balance = balance
+                Balance = balance,
+                BIC = GLOBALS.BANK_BIC,
+                AccountNumber = newAccountNumber
             };
 
             return await HttpMgr.Instance.PostAccountAsync(account);
@@ -44,7 +51,10 @@ namespace BankClientApp
 
         public async Task<List<BankAccount>> LoadAccountsForUserAsync(BankCustomer customer)
         {
-            return await HttpMgr.Instance.GetAccountsForUserAsync(customer.ID, customer.passwordHash);
+            List<BankAccount> userAccounts = await HttpMgr.Instance.GetAccountsForUserAsync(customer.ID, customer.passwordHash);
+            allUserAccounts = userAccounts;
+
+            return userAccounts;
         }
     }
 }

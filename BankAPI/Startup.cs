@@ -28,7 +28,7 @@ namespace BankAPI
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddEntityFrameworkSqlite().AddDbContext<BankContext>();
-            services.AddDbContext<BankContext>(opt => opt.UseSqlite("Filename = Bank.db"));
+            services.AddDbContext<BankContext>(opt => opt.UseSqlite("Filename = BankDB.db"));
             services.AddControllers();
         }
 
