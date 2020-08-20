@@ -22,6 +22,7 @@
                                     <GridViewColumn Header="Amount" Width="120"/>
                                     <GridViewColumn Header="Other Party" Width="120"/>
                                     <GridViewColumn Header="IBAN" Width="120"/>
+                                    <GridViewColumn Header="Message" Width="120"/>
                                     <GridViewColumn Header="Date" Width="120"/>
                                 </GridView>
                             </ListView.View>
@@ -82,10 +83,10 @@
                         <TextBlock Grid.Row="2" Grid.Column="0" Text="Amount" FontSize="13" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center"/>
                         <TextBlock Grid.Row="3" Grid.Column="0" Text="Message" FontSize="13" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center"/>
 
-                        <TextBox Name="sendRecipientIBAN" Grid.Row="0" Grid.Column="1" Text="not loaded" Width="250" FontSize="13" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
-                        <TextBox Name="sendRecipientName" Grid.Row="1" Grid.Column="1" Text="not loaded" Width="250" FontSize="13" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
-                        <TextBox Name="sendAmount" Grid.Row="2" Grid.Column="1" Text="not loaded" FontSize="13" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
-                        <TextBox Name="sendMessage" Grid.Row="3" Grid.Column="1" Text="not loaded" Width="250" FontSize="13" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        <TextBox Name="sendRecipientIBAN" Grid.Row="0" Grid.Column="1" Text="" Width="250" FontSize="13" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        <TextBox Name="sendRecipientName" Grid.Row="1" Grid.Column="1" Text="" Width="250" FontSize="13" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        <TextBox Name="sendAmount" Grid.Row="2" Grid.Column="1" Text="" Width="250" FontSize="13" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        <TextBox Name="sendMessage" Grid.Row="3" Grid.Column="1" Text="" Width="250" FontSize="13" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
 
                         <Button Content="Send Money" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="95" Grid.Row="4" Background="#FFD0E4D1"/>
 

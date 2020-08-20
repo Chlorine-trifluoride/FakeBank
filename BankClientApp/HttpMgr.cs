@@ -159,5 +159,40 @@ namespace BankClientApp
 
             return bankCustomer;
         }
+
+        public async Task<string> PostTransactionAsync(BankTransaction transaction)
+        {
+            string apiResponse = "";
+
+            using (HttpClient httpClient = new HttpClient(GetNewHandler()))
+            {
+                string data = JsonSerializer.Serialize<BankTransaction>(transaction);
+                var content = new StringContent(data, Encoding.UTF8, "application/json");
+                using (var response = await httpClient.PostAsync($"{SERVER}:{PORT}/api/BankCustomers", content))
+                {
+                    apiResponse = await response.Content.ReadAsStringAsync();
+                }
+            }
+
+            return apiResponse;
+        }
+
+        public async Task<bool> DoesAccountExistsAsync(string IBAN)
+        {
+            bool accountExists = false;
+
+            using (HttpClient httpClient = new HttpClient(GetNewHandler()))
+            {
+                using (var response = await httpClient.GetAsync($"{SERVER}:{PORT}/api/BankAccounts/{IBAN}"))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+
+                    if (response.IsSuccessStatusCode)
+                        accountExists = true;
+                }
+            }
+
+            return accountExists;
+        }
     }
 }

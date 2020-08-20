@@ -46,5 +46,11 @@ namespace BankModel
             // return the same number of chars
             return string.Concat(output).Substring(0, input.Length);
         }
+
+        // Returns the split version of account number. Should be stored in DB instead
+        public static (string BIC, string accountNumber) GetBicAndAccFromIBAN(string IBAN)
+        {
+            return (IBAN.Substring(0, 4), IBAN.Substring(4));
+        }
     }
 }

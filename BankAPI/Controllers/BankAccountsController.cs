@@ -30,7 +30,7 @@ namespace BankAPI.Controllers
         }
 
         // GET: api/BankAccounts/5/
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<BankAccount>> GetBankAccount(uint id)
         {
             var bankAccount = await _context.BankAccounts.FindAsync(id);
@@ -41,6 +41,26 @@ namespace BankAPI.Controllers
             }
 
             return bankAccount;
+        }
+
+        // Find if account exists based on IBAN
+        // GET: api/BankAccounts/FA5354431166871100/
+        [HttpGet("{rIBAN}")]
+        public async Task<ActionResult<bool>> GetBankAccount(string rIBAN)
+        {
+            // TODO: this should be stored in DB instead
+            (string BIC, string accountNumber) splitIBAN = Utils.GetBicAndAccFromIBAN(rIBAN);
+
+            var result = from account in _context.BankAccounts
+                         where account.BIC == splitIBAN.BIC && account.AccountNumber == splitIBAN.accountNumber
+                         select account;
+
+            if (result is null || result.Count() < 1)
+            {
+                return NotFound();
+            }
+
+            return true;
         }
 
         // Get bank accounts for specific user with password

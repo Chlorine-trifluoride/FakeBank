@@ -67,7 +67,7 @@ namespace BankClientApp
             // Info Tab
             infoAccountID.Text = account.ID.ToString();
             infoIsActive.Text = (!account.IsFrozen).ToString();
-            infoBalance.Text = account.Balance.ToString();
+            infoBalance.Text = account.BalanceEur;
             infoBic4.Text = account.BIC;
             infoAccountNumber.Text = account.AccountNumber;
             infoIBAN.Text = account.IBAN;
