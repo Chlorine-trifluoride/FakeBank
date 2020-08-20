@@ -13,3 +13,14 @@ The communication is done over https using basic HTTP status codes and JSON.
 The account creation/login uses basic client side salted SHA512 hashing to protect user passwords.
 **Some** API calls are protected using the login information. Very much a work in progress.
 
+## Account Info Page
+
+<img src="https://github.com/Chlorine-trifluoride/FakeBank/raw/readme/Media/testman_infopage.png"/>
+
+## Transfering Funds
+
+<img src="https://github.com/Chlorine-trifluoride/FakeBank/raw/readme/Media/bill_transfer.gif"/>
+
+## Transaction History
+
+<img src="https://github.com/Chlorine-trifluoride/FakeBank/raw/readme/Media/transaction_history.png"/>
