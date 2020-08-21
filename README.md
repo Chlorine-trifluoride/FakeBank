@@ -13,6 +13,8 @@ The communication is done over https using basic HTTP status codes and JSON.
 The account creation/login uses basic client side salted SHA512 hashing to protect user passwords.
 **Some** API calls are protected using the login information. Very much a work in progress.
 
+See the <a href="https://github.com/Chlorine-trifluoride/FakeBank/projects/1">**Projects**</a> page for more info on current progress.
+
 ## System Requirements
 
 The API-service runs on dotnet core.
