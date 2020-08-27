@@ -52,7 +52,7 @@ namespace BankClientApp
             string username = loginUsernameTextBox.Text;
             string password = loginPasswordBox.Password;
 
-            if (Utils.IsAnyEmptyOrNull(username, password))
+            if (Utils.IsAnyEmptyOrNull(username, password)) // TODO: there's clearly a bug here
                 Common.DisplayErrorBox("One or more fields is empty");
 
             BankCustomer customer = await CustomerManager.Instance.GetCustomerWithPasswordAsync(username, password);
